@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
-import github from '@actions/github'
+// import github from '@actions/github'
+import axios from 'axios'
 
 try {
   const repository = core.getInput('repository')
@@ -7,8 +8,9 @@ try {
   const [namespace, repositoryName] = repository.split('/')
   const requestUrl = `https://hub.docker.com/v2/namespaces/${namespace}/repositories/${repositoryName}/tags`
   console.log('requestUrl: ', requestUrl)
-  fetch(requestUrl)
-    .then((response) => response.json())
+  axios
+    .get(requestUrl)
+    .then((response) => response.data)
     .then((data) => {
       core.setOutput('data', data)
     })
