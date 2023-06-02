@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'docker-image-version'
+description: 'Get the next version of repository in docker hub'
 inputs:
   repository:
     description: 'get the latest version of the repository'
