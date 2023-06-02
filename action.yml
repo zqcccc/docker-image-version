@@ -1,13 +1,13 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  repository:
+    description: 'get the latest version of the repository'
     required: true
-    default: 'World'
+    default: '0.0.1'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  data:
+    description: 'The data from docker hub'
 runs:
   using: 'node16'
   main: 'dist/index.js'
