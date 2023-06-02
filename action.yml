@@ -6,8 +6,8 @@ inputs:
     required: true
     default: '0.0.1'
 outputs:
-  data:
-    description: 'The data from docker hub'
+  next_version:
+    description: 'The next version of the repository'
 runs:
   using: 'node16'
   main: 'dist/index.js'

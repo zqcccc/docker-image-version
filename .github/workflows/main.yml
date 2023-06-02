@@ -14,4 +14,4 @@ jobs:
           repository: '172232502/misc'
       # Use the output from the `hello` step
       - name: Get the output data
-        run: echo "The data was ${{ steps.hello.outputs.data }}"
+        run: echo "The next version is ${{ steps.hello.outputs.next_version }}"

@@ -5014,6 +5014,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(4450));
 // import github from '@actions/github'
 const axios_1 = __importDefault(__nccwpck_require__(8559));
+const utils_1 = __nccwpck_require__(9847);
 try {
     const repository = core.getInput('repository');
     console.log('repository: ', repository);
@@ -5024,12 +5025,69 @@ try {
         .get(requestUrl)
         .then((response) => response.data)
         .then((data) => {
-        core.setOutput('data', data);
+        const versions = data.results.map((res) => res.name);
+        (0, utils_1.SortArrayByDescVersion)(versions);
+        const latestVersion = versions.find((tag) => tag.includes('.')); // 0.0.1
+        const versionNumbers = latestVersion
+            .split('.')
+            .map((num) => parseInt(num));
+        const newVersion = `${versionNumbers[0]}.${versionNumbers[1]}.${versionNumbers[2] + 1}`;
+        core.setOutput('next_version', newVersion);
     });
 }
 catch (error) {
     core.setFailed(error.message);
 }
+
+
+/***/ }),
+
+/***/ 9847:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SortArrayByDescVersion = void 0;
+function SortArrayByDescVersion(arr) {
+    arr.sort((a, b) => {
+        const aVersion = a;
+        const bVersion = b;
+        if (aVersion && bVersion) {
+            const aVersionNum = aVersion.split('.').map((num) => parseInt(num));
+            const bVersionNum = bVersion.split('.').map((num) => parseInt(num));
+            if (aVersionNum[0] > bVersionNum[0]) {
+                return -1;
+            }
+            else if (aVersionNum[0] < bVersionNum[0]) {
+                return 1;
+            }
+            else {
+                if (aVersionNum[1] > bVersionNum[1]) {
+                    return -1;
+                }
+                else if (aVersionNum[1] < bVersionNum[1]) {
+                    return 1;
+                }
+                else {
+                    if (aVersionNum[2] > bVersionNum[2]) {
+                        return -1;
+                    }
+                    else if (aVersionNum[2] < bVersionNum[2]) {
+                        return 1;
+                    }
+                    else {
+                        return 0;
+                    }
+                }
+            }
+        }
+        else {
+            return 0;
+        }
+    });
+}
+exports.SortArrayByDescVersion = SortArrayByDescVersion;
 
 
 /***/ }),
