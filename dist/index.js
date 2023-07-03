@@ -5032,6 +5032,7 @@ try {
             .split('.')
             .map((num) => parseInt(num));
         const newVersion = `${versionNumbers[0]}.${versionNumbers[1]}.${versionNumbers[2] + 1}`;
+        console.log('next_version:', newVersion);
         core.setOutput('next_version', newVersion);
     });
 }
