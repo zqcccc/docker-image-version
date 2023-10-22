@@ -5028,6 +5028,10 @@ try {
         const versions = data.results.map((res) => res.name);
         (0, utils_1.SortArrayByDescVersion)(versions);
         const latestVersion = versions.find((tag) => tag.includes('.')); // 0.0.1
+        if (!latestVersion) {
+            core.setOutput('next_version', '0.0.1');
+            return;
+        }
         const versionNumbers = latestVersion
             .split('.')
             .map((num) => parseInt(num));

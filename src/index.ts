@@ -16,12 +16,15 @@ try {
       const versions = data.results.map((res: { name: string }) => res.name)
       SortArrayByDescVersion(versions)
       const latestVersion = versions.find((tag: string) => tag.includes('.')) // 0.0.1
+      if (!latestVersion) {
+        core.setOutput('next_version', '0.0.1')
+        return
+      }
       const versionNumbers = latestVersion
         .split('.')
         .map((num: string) => parseInt(num))
-      const newVersion = `${versionNumbers[0]}.${versionNumbers[1]}.${
-        versionNumbers[2] + 1
-      }`
+      const newVersion = `${versionNumbers[0]}.${versionNumbers[1]}.${versionNumbers[2] + 1
+        }`
       console.log('next_version:', newVersion)
       core.setOutput('next_version', newVersion)
     })
